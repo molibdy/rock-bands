@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+body{
+    background-color: rgb(244, 250, 249);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+}
+
+.col-center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.row-spaced{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.row-left{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.row-center{
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+}

@@ -1,0 +1,62 @@
+<div class="col-center container">
+    <h1>El mejor rock de los 70</h1>
+    <div class="menu-row">
+        <div class="search-container">
+            <div class="search">
+                <input type="text" [(ngModel)]="searchInput" placeholder="Buscar" (input)="searchBand()"/>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <button id="addBand" (click)="bandForm=true">Añadir banda</button>
+    </div>
+
+    <!-- Form to add new band -->
+    <div class="list" *ngIf="bandForm">
+        <form class="bandForm">
+            <div>
+                <label for="bandName">Nombre de la banda</label>
+                <input type="text" id="bandName" placeholder="Nombre">
+            </div>
+            <div>
+                <label for="bandYear">Año de creación</label>
+                <input type="number" id="bandYear" placeholder="Año">
+            </div>
+            <div>
+                <label for="bandPicture">Foto de la banda</label>
+                <input type="text" id="bandPicture" placeholder="URL de la foto">
+            </div>
+            <div>
+                <label for="bandHitName">Su mejor canción</label>
+                <input type="text" id="bandHitName" placeholder="Nombre de la canción">
+            </div>
+            <div>
+                <label for="bandHitUrl">Vídeo de la canción</label>
+                <input type="text" id="bandHitUrl" placeholder="URL del vídeo">
+            </div>
+            <button (click)="addBand"></button>
+        </form>
+    </div>
+   
+
+    <div class="col-center list" *ngIf="filteredBands.length>0; else noBands">
+        <div class="col-center  list-item" *ngFor="let band of filteredBands; let i=index">
+            <div class="horizontal-line" *ngIf="i>0"></div>
+            <div class="row-spaced band-item">
+                <div class="band-details" (click)="seeDetails(band.id)" >
+                    <div class="bandPic">
+                        <img [src]="band.picture" [alt]="band.name" [aria-label]="foto">
+                    </div>
+                    <div class="band-name">
+                        <h1>{{band.name}}</h1>
+                    </div>
+                </div>
+                <div class="col-center botones">
+                    <!-- <button (click)="editBand(band.id)">Editar</button> -->
+                    <button (click)="deleteBand(band.id)">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noBands> No hay bandas que mostrar</ng-template>
+</div>
