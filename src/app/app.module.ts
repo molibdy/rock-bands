@@ -6,7 +6,10 @@ import { AppComponent } from './app.component';
 import { ListadoComponent } from './pages/listado/listado.component';
 import { DetalleComponent } from './pages/detalle/detalle.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormControl, FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SafePipeModule } from 'safe-pipe';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {MatIconModule} from '@angular/material/icon'
 
 
 @NgModule({
@@ -20,6 +23,10 @@ import { FormControl, FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    SafePipeModule,
+    ReactiveFormsModule,
+    NoopAnimationsModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

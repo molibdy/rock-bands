@@ -1,15 +1,91 @@
-<div>
-    <div class="col-center">
-        <h1>{{bandsService.selectedBand.name}}</h1>
-        <div>Año de creación: {{bandsService.selectedBand.yearCreated}}
-        </div>
-
-        
-        <div>Escucha su mayor éxito: {{bandsService.selectedBand.bestHitName}}
-            <iframe [src]="bandsService.selectedBand.bestHitUrl" frameborder="0"></iframe>
-            
-        </div>
+<div class="header">
+    <a class="link" routerLink="../listado">Volver al listado</a>
+    <div class="link-icon" routerLink="../listado"> 
+        <mat-icon class="icon" aria-label="atras" inline=true>chevron_left</mat-icon>
     </div>
 
-    <a routerLink="../listado">Volver al listado</a>
+    <div class="header-title">
+        <h1>{{bandsService.selectedBand.name}}</h1>
+        <div class="spacer"></div>
+    </div>
 </div>
+
+<div class="col-center container">
+     <!-- Form to edit band info-->
+    <div class="card" *ngIf="editable">
+        <div class="form-title">Editar información de la banda</div>
+        <form class="bandForm">
+            <div class="form-row">
+                <label for="bandName">Nombre de la banda</label>
+                <div class="form-input">
+                    <input type="text" #bandName placeholder="Nombre">
+                </div>
+                
+            </div>
+            <div class="form-row">
+                <label for="bandYear">Año de creación</label>
+                <div class="form-input">
+                    <input type="number" #bandYear placeholder="Año">
+                </div>
+            
+            </div>
+            <div class="form-row">
+                <label for="bandPicture">Foto de la banda</label>
+                <div class="form-input">
+                    <input type="text" #bandPicture placeholder="URL de la foto">
+                </div>
+                
+            </div>
+            <div class="form-row">
+                <label for="bandHitName">Su mejor canción</label>
+                <div class="form-input">
+                    <input type="text" #bandHitName placeholder="Nombre de la canción">
+                </div>
+                
+            </div>
+            <div class="form-row">
+                <label for="bandHitUrl">Vídeo de la canción</label>
+                <div class="form-input">
+                    <input type="text" #bandHitUrl placeholder="URL del vídeo">
+                </div>
+                
+            </div>
+            <button class="add-button" (click)="editBand(bandName.value, bandYear.valueAsNumber, bandPicture.value, bandHitName.value, bandHitUrl.value)">
+                Guardar cambios
+            </button>
+        </form>
+    </div>
+
+     <!-- Band info-->
+    <div class="card">
+        <div class="info-row">
+            <div class="bandPic">
+                <img [src]="bandsService.selectedBand.picture" [alt]="bandsService.selectedBand.name">
+            </div>
+            <div class="info">
+                <div class="info-line">
+                    Año de creación: <span>{{bandsService.selectedBand.yearCreated}}</span> 
+                </div>
+
+                <div class="bestHit">
+                    <div class="info-line">
+                        Escucha su mayor éxito: <br>
+                        <span>{{bandsService.selectedBand.bestHitName}}</span> 
+                    </div>
+                    <iframe [src]="bandsService.selectedBand.bestHitUrl | safe: 'resourceUrl'" frameborder="0"></iframe>
+                    
+                </div>
+                <div class="button-row">
+                    <button class="edit-button" (click)="editable ? editable=false : editable=true">
+                        Editar información
+                    </button>
+                </div>
+                
+            </div>
+        </div>
+       
+    
+       
+    </div>
+</div>
+

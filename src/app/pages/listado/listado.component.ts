@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Band } from 'src/app/models/band';
 import { BandsService } from 'src/app/shared/bands.service';
@@ -11,11 +12,27 @@ import { BandsService } from 'src/app/shared/bands.service';
 export class ListadoComponent implements OnInit {
   public searchInput:string='';
   public filteredBands:Band[]=[];
-  public bandForm:boolean=false;
-  constructor(public bandsService:BandsService, private router:Router) { }
+  public showForm:boolean=false;
+  public showSearch:boolean=false;
+  public bandForm:FormGroup;
+  constructor(public bandsService:BandsService, 
+    private router:Router,
+    public formBuilder:FormBuilder) { 
+      this.buildForm()
+    }
 
   ngOnInit(): void {
     this.getBands();
+  }
+
+  private buildForm(){
+    this.bandForm=this.formBuilder.group({
+      name:[, Validators.required],
+      yearCreated:[, [Validators.required, Validators.min(1000)]],
+      picture:[, Validators.required],
+      bestHitName:[, Validators.required],
+      bestHitUrl:[]
+    })
   }
 
   getBands(){
@@ -37,7 +54,6 @@ export class ListadoComponent implements OnInit {
   }
 
   seeDetails(id:number){
-    console.log('seedetails')
     for(let band of this.bandsService.bands){
       if (band.id==id){
         this.bandsService.selectedBand=band;
@@ -55,6 +71,14 @@ export class ListadoComponent implements OnInit {
     })
   }
 
+  addBand(){
+    this.bandsService.addBand(this.bandForm.value).subscribe((addition:any)=>{
+      if(addition.type>0){
+        this.showForm=false;
+        this.getBands()
+      }
+    })
+  }
 
 
 }

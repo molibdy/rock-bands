@@ -15,6 +15,9 @@ export class BandsService {
   getBands(){
     return this.http.get(this.url);
   }
+  getBand(id:number){
+    return this.http.get(`${this.url}?id=${id}`);
+  }
 
   addBand(newBand:Band){
     return this.http.post(this.url,newBand);
@@ -25,7 +28,7 @@ export class BandsService {
   }
 
   deleteBand(id:number){
-    return this.http.delete(`${this.url}/id=${id}`)
+    return this.http.delete(`${this.url}?id=${id}`)
   }
 
 

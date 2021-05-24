@@ -1,39 +1,75 @@
-<div class="col-center container">
-    <h1>El mejor rock de los 70</h1>
+<div class="header">
     <div class="menu-row">
+        <div class="title">El mejor rock de los 70</div>
         <div class="search-container">
             <div class="search">
                 <input type="text" [(ngModel)]="searchInput" placeholder="Buscar" (input)="searchBand()"/>
             </div>
+            <div class="search-icon">
+                <mat-icon class="icon" aria-label="busqueda" (click)="showSearch ? showSearch=false : showSearch=true">search</mat-icon>
+            </div>
+
+            <button class="addBand" (click)="showForm ? showForm=false : showForm=true">Añadir banda</button>
+            <div class="add-icon" (click)="showForm ? showForm=false : showForm=true">
+                <mat-icon class="icon" aria-label="busqueda">add</mat-icon>
+            </div>
+        </div> 
+        <div class="search-mobile" *ngIf="showSearch">
+            <input type="text" [(ngModel)]="searchInput" placeholder="Buscar" (input)="searchBand()"/>
         </div>
-        <div class="spacer"></div>
-        <button id="addBand" (click)="bandForm=true">Añadir banda</button>
     </div>
+</div>
+
+<div class="col-center container">
+    
+   
 
     <!-- Form to add new band -->
-    <div class="list" *ngIf="bandForm">
-        <form class="bandForm">
-            <div>
-                <label for="bandName">Nombre de la banda</label>
-                <input type="text" id="bandName" placeholder="Nombre">
+    <div class="list" *ngIf="showForm">
+        <div class="form-title">Añade una banda a la lista
+            <div class="cerrar" (click)="showForm=false">+</div>
+        </div>
+       
+        <form [formGroup]="bandForm" class="bandForm">
+        <!-- <form class="bandForm"> -->
+            <div class="form-row">
+                <label for="name">Nombre de la banda</label>
+                <div [ngClass]="{'is-invalid': !bandForm.get('name').valid, 'form-input':bandForm.get('name').valid}">
+                    <input type="text" formControlName="name" placeholder="Nombre">
+                </div>
+                
             </div>
-            <div>
-                <label for="bandYear">Año de creación</label>
-                <input type="number" id="bandYear" placeholder="Año">
+            <div class="form-row">
+                <label for="yearCreated">Año de creación</label>
+                <div [ngClass]="{'is-invalid': !bandForm.get('yearCreated').valid, 'form-input':bandForm.get('yearCreated').valid}">
+                    <input type="number" formControlName="yearCreated" placeholder="Año">
+                </div>
+               
             </div>
-            <div>
-                <label for="bandPicture">Foto de la banda</label>
-                <input type="text" id="bandPicture" placeholder="URL de la foto">
+            <div class="form-row">
+                <label for="picture">Foto de la banda</label>
+                <div [ngClass]="{'is-invalid': !bandForm.get('picture').valid, 'form-input':bandForm.get('picture').valid}">
+                    <input type="text" formControlName="picture" placeholder="URL de la foto">
+                </div>
+                
             </div>
-            <div>
-                <label for="bandHitName">Su mejor canción</label>
-                <input type="text" id="bandHitName" placeholder="Nombre de la canción">
+            <div class="form-row">
+                <label for="bestHitName">Su mejor canción</label>
+                <div [ngClass]="{'is-invalid': !bandForm.get('bestHitName').valid, 'form-input':bandForm.get('bestHitName').valid}">
+                    <input type="text" formControlName="bestHitName" placeholder="Nombre de la canción">
+                </div>
+                
             </div>
-            <div>
-                <label for="bandHitUrl">Vídeo de la canción</label>
-                <input type="text" id="bandHitUrl" placeholder="URL del vídeo">
+            <div class="form-row">
+                <label for="bestHitUrl">Vídeo de la canción</label>
+                <div class="form-input">
+                    <input type="text" formControlName="bestHitUrl" placeholder="URL del vídeo">
+                </div>
+                
             </div>
-            <button (click)="addBand"></button>
+            <button class="add-button" (click)="addBand()" [disabled]="bandForm.invalid">
+                Añadir
+            </button>
         </form>
     </div>
    
@@ -51,8 +87,20 @@
                     </div>
                 </div>
                 <div class="col-center botones">
-                    <!-- <button (click)="editBand(band.id)">Editar</button> -->
-                    <button (click)="deleteBand(band.id)">Eliminar</button>
+                    <button (click)="deleting=true">Eliminar</button>
+                </div>
+                <div class="modal"  (click)="deleting=false" *ngIf="deleting">
+                    <div class="modal-content">
+                        <p>Cuidado</p>
+                        <p>¡si eliminas esta banda tendrás que volver a introducirla a mano!</p>
+                        
+                        <div class="button-row">
+                            <button class="cancel-button" (click)="deleting=false">Cancelar</button>
+                            <button class="delete-button" (click)="deleteBand(band.id)">Eliminar</button>
+                        </div>
+                        
+                    </div>
+                   
                 </div>
             </div>
         </div>
