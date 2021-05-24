@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class BandsService {
   public bands:Band[];
   public selectedBand:Band;
-  private url='http://localhost:300/bands'
+  private url='https://rockband-api.herokuapp.com/bands'
   constructor(private http:HttpClient) { 
     this.bands=[];
   }
